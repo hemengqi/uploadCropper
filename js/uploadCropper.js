@@ -17,6 +17,7 @@
 			$cropAction = $('#cropAction'),//裁剪操作
 			$tipBox = $('#'+args.tipBox),//裁剪错误显示容器
 			$cropUrl = args.cropUrl,//裁剪图片控制器
+			$path = args.filePath,//裁剪后图片相对路径
 			$image = new Object(),//创建图片对象存储图片信息
 			$ratio = args.ratio,//裁剪长宽比例
 			$maxSize = args.maxSize,//限定最大长寸
@@ -124,7 +125,7 @@
 			//显示裁剪容器
 			showCrop: function(src){
 				this.clearCoords();
-				var nSrc = '/uploadCroper/'+src;
+				var nSrc = $path+src;
 				jcrop_api.setImage(nSrc);
 				$previewImg.prop('src',nSrc)
 				$cropBox.modal('show');
@@ -133,7 +134,7 @@
 			hideCrop: function(src){
 				$cropBox.modal('hide');
 				//显示裁剪图片
-				$_upload.find($cropped).prop('src','/uploadCroper/'+src);
+				$_upload.find($cropped).prop('src',$path +src);
 			},
 			btnStatus: function(state){
 				if(state){
@@ -316,7 +317,7 @@
 		};
 		cropper.init();
 	};
-	$.fn.uploadCroper = function(origin_o){
+	$.fn.uploadCropper = function(origin_o){
 		var options = $.extend({
 			'uploadBtn': 'uploadedfile',//上传触发按钮class
 			'uploadUrl': 'Image.php',//上传图片控制器
@@ -331,6 +332,7 @@
 			'cropBtn': 'cropBtn',//裁剪事件触发按钮id
 			'tipBox': 'tipBox',//裁剪信息错误显示容器id
 			'cropUrl': 'Crop.php',//裁剪图片控制器
+			'filePath': '/uploadCropper/',//裁剪成功图片相对路径
 			'ratio': 0,//裁剪长宽比例
 			'tarSize': [150,150],//目标图片宽度，高度最大尺寸
 			'maxSize': [0,0],//裁剪框最大尺寸
